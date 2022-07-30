@@ -1,9 +1,5 @@
-let userInput: unknown;
-let userName: string;
+const generateError = (message: string, code: number): never => {
+  throw { message, errorCode: code };
+};
 
-userInput = 5;
-userInput = 'Alex';
-userName = 'Max';
-if (typeof userInput === 'string') {
-  userName = userInput;
-}
+const res = generateError('An error occurred!', 500);
