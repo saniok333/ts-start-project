@@ -1,15 +1,17 @@
-const person: {
-  name: string;
-  age: number;
-  hobbies: string[];
-  role: [number, string];
-} = {
+enum Role {
+  ADMIN,
+  AUTHOR,
+  BOSS,
+}
+
+const person = {
   name: 'Max',
   age: 20,
   hobbies: ['Sports', 'Cooking'],
-  role: [2, 'author'],
+  role: Role.ADMIN,
 };
 
-person.role.push('admin'); // push is exception
-
-console.log(person);
+if (person.role === Role.ADMIN) {
+  console.log('is Admin');
+  console.log(person.role); // 0
+}
