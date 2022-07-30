@@ -1,18 +1,9 @@
-const add = (n1: number, n2: number): number => n1 + n2;
+let userInput: unknown;
+let userName: string;
 
-const printResult = (num: number): void => {
-  console.log(`Result: ${num}`);
-};
-
-let combineValues: (a: number, b: number) => number;
-
-combineValues = add;
-
-const addAndHandle = (n1: number, n2: number, cb: (num: number) => void) => {
-  const result = n1 + n2;
-  cb(result);
-};
-
-addAndHandle(40, 20, (r) => {
-  console.log(r);
-});
+userInput = 5;
+userInput = 'Alex';
+userName = 'Max';
+if (typeof userInput === 'string') {
+  userName = userInput;
+}
