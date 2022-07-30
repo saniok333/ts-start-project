@@ -7,3 +7,12 @@ const printResult = (num: number): void => {
 let combineValues: (a: number, b: number) => number;
 
 combineValues = add;
+
+const addAndHandle = (n1: number, n2: number, cb: (num: number) => void) => {
+  const result = n1 + n2;
+  cb(result);
+};
+
+addAndHandle(40, 20, (r) => {
+  console.log(r);
+});
