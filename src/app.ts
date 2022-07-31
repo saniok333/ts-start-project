@@ -1,11 +1,11 @@
-const add = (...numbers: number[]) => numbers.reduce((sum, num) => sum + num);
+class Department {
+  name: string;
 
-const addedNumbers = add(3, 5, 2, 8);
-console.log(addedNumbers);
+  constructor(n: string) {
+    this.name = n;
+  }
+}
 
-//using restOperator with tuples
-const add2 = (...numbers: [number, number, number]) =>
-  numbers.reduce((sum, num) => sum + num);
+const accounting = new Department('Accounting');
 
-const addedNumbers2 = add2(3, 5, 2);
-console.log(addedNumbers2);
+console.log(accounting);
