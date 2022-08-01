@@ -1,19 +1,14 @@
-class Department {
+abstract class Department {
   static fiscalYear = 2022;
   protected employees: string[] = [];
 
-  constructor(private readonly id: string, private name: string) {
-    // console.log(this.fiscalYear)  // it doesn't work 'cause it is static property
-    console.log(Department.fiscalYear);
-  }
+  constructor(protected readonly id: string, public name: string) {}
 
   static createEmployee(name: string) {
     return { name: name };
   }
 
-  describe(this: Department) {
-    console.log('Department: (' + this.id + ') ' + this.name);
-  }
+  abstract describe(this: Department): void;
 
   addEmployee(this: Department, employee: string) {
     this.employees.push(employee);
@@ -30,6 +25,10 @@ class ITDepartment extends Department {
   constructor(id: string, admins: string[]) {
     super(id, 'IT');
     this.admins = admins;
+  }
+
+  describe(this: ITDepartment) {
+    console.log('IT Department - ID: ' + this.id);
   }
 }
 
@@ -63,6 +62,10 @@ class AccountingDepartment extends Department {
     console.log(this.reports);
   }
 
+  describe(this: AccountingDepartment) {
+    console.log('Accounting Department - ID: ' + this.id);
+  }
+
   addEmployee(this: AccountingDepartment, name: string) {
     if (name === 'Alex') {
       return;
@@ -76,9 +79,6 @@ console.log(employee1, Department.fiscalYear);
 
 const it = new ITDepartment('d1', ['Alex']);
 
-// const employee2 = it.createEmployee('John'); // it doesn't work 'cause it is static property
-const employee2 = ITDepartment.createEmployee('John');
-
 it.addEmployee('Alex');
 it.addEmployee('Max');
 
@@ -88,7 +88,6 @@ it.printEmployeeInformation();
 
 const accounting = new AccountingDepartment('d2', []);
 
-// console.log(accounting.fiscalYear);   // it doesn't work 'cause it is static property
 console.log(AccountingDepartment.fiscalYear);
 
 accounting.addReport('Something went wrong');
@@ -102,3 +101,5 @@ accounting.addEmployee('Alex');
 accounting.addEmployee('Max');
 
 accounting.printEmployeeInformation();
+
+accounting.describe();
