@@ -1,5 +1,5 @@
 class Department {
-  private employees: string[] = [];
+  protected employees: string[] = []; // we changed modifier 'cause private doesn't allow change a property from extended class
 
   constructor(private readonly id: string, private name: string) {}
 
@@ -36,6 +36,13 @@ class AccountingDepartment extends Department {
   printReports(this: AccountingDepartment) {
     console.log(this.reports);
   }
+
+  addEmployee(this: AccountingDepartment, name: string) {
+    if (name === 'Alex') {
+      return;
+    }
+    this.employees.push(name);
+  }
 }
 
 const it = new ITDepartment('d1', ['Alex']);
@@ -52,3 +59,8 @@ const accounting = new AccountingDepartment('d2', []);
 accounting.addReport('Something went wrong');
 
 accounting.printReports();
+
+accounting.addEmployee('Alex');
+accounting.addEmployee('Max');
+
+accounting.printEmployeeInformation();
