@@ -3,7 +3,7 @@ class Department {
   //   private name: string;
   private employees: string[] = [];
 
-  constructor(private id: string, private name: string) {
+  constructor(private readonly id: string, private name: string) {
     // this.id = id;
     // this.name = n;
   }
@@ -20,6 +20,10 @@ class Department {
     console.log(this.employees.length);
     console.log(this.employees);
   }
+
+  // addDepartmentId(this: Department, id: string){  // this method won't work due to id property has readonly modifier
+  //   this.id = id
+  // }
 }
 
 const accounting = new Department('d1', 'Accounting');
