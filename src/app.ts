@@ -1,12 +1,7 @@
 class Department {
-  //   private id: string;
-  //   private name: string;
   private employees: string[] = [];
 
-  constructor(private readonly id: string, private name: string) {
-    // this.id = id;
-    // this.name = n;
-  }
+  constructor(private readonly id: string, private name: string) {}
 
   describe(this: Department) {
     console.log('Department: (' + this.id + ') ' + this.name);
@@ -20,21 +15,40 @@ class Department {
     console.log(this.employees.length);
     console.log(this.employees);
   }
-
-  // addDepartmentId(this: Department, id: string){  // this method won't work due to id property has readonly modifier
-  //   this.id = id
-  // }
 }
 
-const accounting = new Department('d1', 'Accounting');
+class ITDepartment extends Department {
+  admins: string[];
+  constructor(id: string, admins: string[]) {
+    super(id, 'IT');
+    this.admins = admins;
+  }
+}
 
-// accounting.name = 'New Name';
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, 'Accounting');
+  }
+  addReport(this: AccountingDepartment, text: string) {
+    this.reports.push(text);
+  }
 
-accounting.addEmployee('Alex');
-accounting.addEmployee('Max');
+  printReports(this: AccountingDepartment) {
+    console.log(this.reports);
+  }
+}
 
-// accounting.employees[2] = 'Fred'  // this string doesn't work due to a private modifier
+const it = new ITDepartment('d1', ['Alex']);
 
-accounting.describe();
+it.addEmployee('Alex');
+it.addEmployee('Max');
 
-accounting.printEmployeeInformation();
+it.describe();
+
+it.printEmployeeInformation();
+
+const accounting = new AccountingDepartment('d2', []);
+
+accounting.addReport('Something went wrong');
+
+accounting.printReports();
