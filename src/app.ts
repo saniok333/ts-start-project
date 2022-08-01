@@ -1,7 +1,15 @@
 class Department {
-  protected employees: string[] = []; // we changed modifier 'cause private doesn't allow change a property from extended class
+  static fiscalYear = 2022;
+  protected employees: string[] = [];
 
-  constructor(private readonly id: string, private name: string) {}
+  constructor(private readonly id: string, private name: string) {
+    // console.log(this.fiscalYear)  // it doesn't work 'cause it is static property
+    console.log(Department.fiscalYear);
+  }
+
+  static createEmployee(name: string) {
+    return { name: name };
+  }
 
   describe(this: Department) {
     console.log('Department: (' + this.id + ') ' + this.name);
@@ -63,7 +71,13 @@ class AccountingDepartment extends Department {
   }
 }
 
+const employee1 = Department.createEmployee('Alex');
+console.log(employee1, Department.fiscalYear);
+
 const it = new ITDepartment('d1', ['Alex']);
+
+// const employee2 = it.createEmployee('John'); // it doesn't work 'cause it is static property
+const employee2 = ITDepartment.createEmployee('John');
 
 it.addEmployee('Alex');
 it.addEmployee('Max');
@@ -73,6 +87,9 @@ it.describe();
 it.printEmployeeInformation();
 
 const accounting = new AccountingDepartment('d2', []);
+
+// console.log(accounting.fiscalYear);   // it doesn't work 'cause it is static property
+console.log(AccountingDepartment.fiscalYear);
 
 accounting.addReport('Something went wrong');
 accounting.mostRecentReport = 'Year end report';
