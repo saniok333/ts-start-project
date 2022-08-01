@@ -1,10 +1,11 @@
-interface Greetable {
+interface Named {
   readonly name: string;
-
+}
+interface Greetable {
   greet(phrase: string): void;
 }
 
-class Person implements Greetable {
+class Person implements Greetable, Named {
   name: string;
   age: number;
 
@@ -21,5 +22,3 @@ class Person implements Greetable {
 const user1: Greetable = new Person('Max', 16);
 
 user1.greet('Hi, my name is ');
-
-// user1.name = 'Gans' // it doesn't work due to nama property has readonly modifier
