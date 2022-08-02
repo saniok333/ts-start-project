@@ -16,25 +16,59 @@ const e1: ElevatedEmployee = {
   startDate: new Date(),
 };
 
-interface Admin2 {
-  name: string;
-  privileges: string[];
-}
+type UnknownEmployee = Employee | Admin;
 
-interface Employee2 {
-  name: string;
-  startDate: Date;
-}
-
-interface ElevatedEmployee2 extends Admin2, Employee2 {}
-
-const e2: ElevatedEmployee2 = {
-  name: 'Alex',
-  privileges: ['create-server'],
-  startDate: new Date(),
+const printEmployeeInformation = (emp: UnknownEmployee) => {
+  console.log(`Name ${emp.name}`);
+  if ('privileges' in emp) {
+    console.log(`Privileges ${emp.privileges}`);
+  }
+  if ('startDate' in emp) {
+    console.log(`Start Date ${emp.startDate}`);
+  }
 };
+
+printEmployeeInformation({ name: 'Alex', privileges: ['create-server'] });
+
+class Car {
+  drive() {
+    console.log('Driving...');
+  }
+}
+
+class Truck {
+  drive() {
+    console.log('Driving truck');
+  }
+
+  loadCargo(amount: number) {
+    console.log(`Loading cargo ... ${amount}`);
+  }
+}
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2 = new Truck();
+
+const useVehicle = (vehicle: Vehicle) => {
+  vehicle.drive();
+  if (vehicle instanceof Truck) {
+    vehicle.loadCargo(1000);
+  }
+};
+
+useVehicle(v1);
+useVehicle(v2);
 
 type Combinable = string | number;
 type Numeric = number | boolean;
 
-type Universal = Combinable & Numeric; // string | number | boolean
+type Universal = Combinable & Numeric;
+
+const add = (a: Combinable, b: Combinable) => {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+};
