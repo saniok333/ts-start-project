@@ -62,3 +62,24 @@ console.log(textStorage.getItems());
 const numberStorage = new DataStorage<number>();
 
 // const objStorage = new DataStorage<object>(); // Type 'object' does not satisfy the constraint 'string | number | boolean'.
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+const createCourseGoal = (
+  title: string,
+  description: string,
+  completeUntil: Date
+): CourseGoal => {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = completeUntil;
+  return courseGoal as CourseGoal;
+};
+
+const names: Readonly<string[]> = ['Alex', 'Sports']; // Readonly is also applicable to objects
+// names.push('Max') // It won't work due to Readonly generic utility type
