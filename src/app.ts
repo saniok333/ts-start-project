@@ -32,3 +32,33 @@ const extractAndConvert = <T extends object, U extends keyof T>(
 };
 
 console.log(extractAndConvert({ name: 'Alex', age: 20 }, 'name'));
+
+class DataStorage<T extends number | string | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>();
+textStorage.addItem('Max');
+textStorage.addItem('Alex');
+// textStorage.addItem(100) // It won't work 'cause we said that it will be a storage of strings
+textStorage.removeItem('Max');
+console.log(textStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+
+// const objStorage = new DataStorage<object>(); // Type 'object' does not satisfy the constraint 'string | number | boolean'.
