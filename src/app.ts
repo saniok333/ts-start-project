@@ -1,12 +1,6 @@
-const names: Array<string> = [];
+const merge = <T, U>(objA: T, objB: U) => {
+  return Object.assign(objA, objB);
+};
 
-const promise: Promise<string> = new Promise((resolve, reject) => {
-  // <string> 'cause resolve('This is done!')
-  setTimeout(() => {
-    resolve('This is done!');
-  }, 3000);
-});
-
-promise.then((data) => {
-  data.split(' ');
-});
+const mergedObj = merge({ name: 'Alex' }, { age: 20 });
+console.log(mergedObj.name);
