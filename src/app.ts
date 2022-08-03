@@ -23,3 +23,12 @@ const countAndDescribe = <T extends Lengthy>(element: T): [T, string] => {
 console.log(countAndDescribe('Hi there!')); //['Hi there!', 'Got 9 elements.']
 console.log(countAndDescribe(['Alex', 'Max', 5])); //[Array(3), 'Got 3 elements.']
 // console.log(countAndDescribe(100)); // It won't work 'cause number doesn't have a length property
+
+const extractAndConvert = <T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) => {
+  return 'Value ' + obj[key];
+};
+
+console.log(extractAndConvert({ name: 'Alex', age: 20 }, 'name'));
