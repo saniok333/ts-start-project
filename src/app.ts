@@ -99,9 +99,26 @@ class Product {
 const p1 = new Product('Book 1', 20); // there is not any console logs after creating instances of the class they were only after defying the class
 const p2 = new Product('Book 2', 50);
 
+const Autobind = (
+  _target: any,
+  _methodName: string,
+  descriptor: PropertyDescriptor
+) => {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjustedDescriptor;
+};
 class Printer {
   message = 'This works!';
 
+  @Autobind
   showMessage() {
     console.log(this.message);
   }
@@ -112,5 +129,4 @@ const p = new Printer();
 console.log(p.message);
 
 const button = document.querySelector('button')!;
-button.addEventListener('click', p.showMessage); // print 'undefined' due to 'this' is event.currentTarget
-button.addEventListener('click', p.showMessage.bind(p)); // we can solve this issue in such way
+button.addEventListener('click', p.showMessage); // now it works
