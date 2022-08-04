@@ -98,3 +98,19 @@ class Product {
 
 const p1 = new Product('Book 1', 20); // there is not any console logs after creating instances of the class they were only after defying the class
 const p2 = new Product('Book 2', 50);
+
+class Printer {
+  message = 'This works!';
+
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+
+console.log(p.message);
+
+const button = document.querySelector('button')!;
+button.addEventListener('click', p.showMessage); // print 'undefined' due to 'this' is event.currentTarget
+button.addEventListener('click', p.showMessage.bind(p)); // we can solve this issue in such way
