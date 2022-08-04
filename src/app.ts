@@ -130,3 +130,40 @@ console.log(p.message);
 
 const button = document.querySelector('button')!;
 button.addEventListener('click', p.showMessage); // now it works
+
+// ---
+
+const RequiredValue = () => {};
+const PositiveNumber = () => {};
+
+const validate = (obj: object) => {};
+
+class Course {
+  @RequiredValue
+  title: string;
+  @PositiveNumber
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+const courseForm = document.querySelector('form')!;
+courseForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const titleEl = document.getElementById('title') as HTMLInputElement;
+  const priceEl = document.getElementById('price') as HTMLInputElement;
+
+  const title = titleEl.value;
+  const price = +priceEl.value;
+
+  const createdCourse = new Course(title, price);
+
+  if (!validate(createdCourse)) {
+    alert('Invalid input, please try again!');
+    return;
+  }
+  console.log(createdCourse);
+});
