@@ -133,14 +133,58 @@ button.addEventListener('click', p.showMessage); // now it works
 
 // ---
 
-const RequiredValue = () => {};
-const PositiveNumber = () => {};
+interface ValidatorConfig {
+  [property: string]: {
+    [validatableProp: string]: string[]; // ['required', 'positive', ...]
+  };
+}
 
-const validate = (obj: object) => {};
+const registeredValidators: ValidatorConfig = {};
+
+const RequiredMoreThan3Symbols = (target: any, propName: string) => {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propName]: [
+      ...(registeredValidators[target.constructor.name]?.[propName] ?? []),
+      'requiredMoreThan3Symbols',
+    ],
+  };
+};
+const PositiveNumber = (target: any, propName: string) => {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propName]: [
+      ...(registeredValidators[target.constructor.name]?.[propName] ?? []),
+      'positive',
+    ],
+  };
+};
+
+const validate = (obj: any): boolean => {
+  const objValidatorConfig = registeredValidators[obj.constructor.name];
+  if (!objValidatorConfig) {
+    return true;
+  }
+  let isValid = true;
+  for (const prop in objValidatorConfig) {
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case 'requiredMoreThan3Symbols':
+          isValid = isValid && obj[prop].toString().length > 3;
+          break;
+        case 'positive':
+          isValid = isValid && obj[prop] > 0;
+          break;
+      }
+    }
+  }
+  return isValid;
+};
 
 class Course {
-  @RequiredValue
+  @RequiredMoreThan3Symbols
   title: string;
+  @RequiredMoreThan3Symbols
   @PositiveNumber
   price: number;
 
