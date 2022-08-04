@@ -1,9 +1,9 @@
-const Logger = (constructor: Function) => {
-  console.log('Logging...');
+const Logger = (logString: string) => (constructor: Function) => {
+  console.log(logString);
   console.log(constructor);
 };
 
-@Logger
+@Logger('LOGGING - PERSON')
 class Person {
   name = 'Alex';
 
