@@ -1,3 +1,19 @@
+const Autobind = (
+  _target: any,
+  _methodName: string,
+  descriptor: PropertyDescriptor
+) => {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      return originalMethod.bind(this);
+    },
+  };
+  return adjustedDescriptor;
+};
+
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -36,6 +52,8 @@ class ProjectInput {
   private attach() {
     this.hostElement.insertAdjacentElement('afterbegin', this.element);
   }
+
+  @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
 
@@ -43,7 +61,7 @@ class ProjectInput {
   }
 
   private configure() {
-    this.element.addEventListener('submit', this.submitHandler.bind(this));
+    this.element.addEventListener('submit', this.submitHandler);
   }
 }
 
